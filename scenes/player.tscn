@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://cd1ew0uovnbrc"]
+
+[ext_resource type="Texture2D" uid="uid://ck2ilk0bghuvj" path="res://assets/textures/player_ship.png" id="1_aj3ug"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_c8lkt"]
+[ext_resource type="PackedScene" uid="uid://dsttd7wvayx1n" path="res://scenes/player_hitbox_component.tscn" id="4_5e2y1"]
+[ext_resource type="PackedScene" uid="uid://cmb5uax44l2kf" path="res://scenes/health_component.tscn" id="4_ttcwp"]
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 8
+motion_mode = 1
+script = ExtResource("1_c8lkt")
+
+[node name="RocketSpawn" type="Node2D" parent="."]
+position = Vector2(29, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_aj3ug")
+
+[node name="ProjectileContainer" type="Node" parent="."]
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_ttcwp")]
+health = 5
+maxHealth = 5
+
+[node name="HitboxComponent" parent="." instance=ExtResource("4_5e2y1")]
+
+[node name="CollisionPolygon2D" parent="HitboxComponent" index="0"]
+polygon = PackedVector2Array(10, -52, 36, -14, 37, 11, 11, 51)
+
+[connection signal="area_entered" from="HitboxComponent" to="HitboxComponent" method="_on_area_entered"]
+
+[editable path="HitboxComponent"]

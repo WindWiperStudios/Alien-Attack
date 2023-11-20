@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsu3nihqgrwmn"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_1yhiv"]
+[ext_resource type="Texture2D" uid="uid://wpde8e1eq4yx" path="res://assets/textures/enemy_ship.png" id="1_bgu01"]
+[ext_resource type="PackedScene" uid="uid://c15ub6f2sgexu" path="res://scenes/hitbox_component.tscn" id="3_0kv0j"]
+[ext_resource type="PackedScene" uid="uid://cmb5uax44l2kf" path="res://scenes/health_component.tscn" id="4_adm2q"]
+
+[node name="Enemy" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_1yhiv")
+movSpeed = 250.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_bgu01")
+flip_h = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(47, 0)
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_adm2q")]
+health = 1
+maxHealth = 1
+
+[node name="ProjectileContainer" type="Node" parent="."]
+
+[node name="HitboxComponent" parent="." instance=ExtResource("3_0kv0j")]
+polygon = PackedVector2Array(24, -44, -53, -9, -53, 7, 24, 43)
+
+[connection signal="area_entered" from="." to="HitboxComponent" method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
+
+[editable path="HitboxComponent"]
