@@ -39,3 +39,6 @@ func _on_death():
 
 func _on_screen_exited():
 	queue_free()
+
+func takeDamage(takenDamage : int):
+	healthComp._on_damage(takenDamage)

@@ -25,4 +25,5 @@ shape = SubResource("CapsuleShape2D_x2n5q")
 [node name="Visibility" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-17, 0)
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="Visibility" to="." method="_on_visibility_screen_exited"]
